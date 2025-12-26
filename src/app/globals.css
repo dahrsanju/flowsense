@@ -105,24 +105,12 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: #ffffff;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--neutral-100);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--primary-500), var(--accent-500));
-  border-radius: 5px;
-}
 
 ::selection {
   background: var(--primary-200);
@@ -236,16 +224,16 @@ body {
 }
 
 .feature-card {
-  background: linear-gradient(var(--background), var(--background)) padding-box,
-              linear-gradient(135deg, var(--primary-400), var(--accent-400), var(--secondary-400)) border-box;
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+              linear-gradient(135deg, #708238, #5c6b2e, #4a5625) border-box;
   border: 2px solid transparent;
   border-radius: 1rem;
   transition: all 0.3s ease;
 }
 
 .feature-card:hover {
-  background: linear-gradient(var(--primary-50), var(--primary-50)) padding-box,
-              linear-gradient(135deg, var(--primary-500), var(--accent-500), var(--secondary-500)) border-box;
+  background: linear-gradient(#f9fafb, #f9fafb) padding-box,
+              linear-gradient(135deg, #5c6b2e, #4a5625, #708238) border-box;
   transform: translateY(-4px);
 }
 
@@ -289,4 +277,26 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Auto-scroll animation for testimonials */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+.pause-animation {
+  animation-play-state: paused;
 }

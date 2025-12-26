@@ -3,64 +3,59 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import {
-  TrendingDown, TrendingUp, Clock, DollarSign,
-  Package, Factory, Truck, FileText
+  Clock, Package, Factory, Truck, FileText, TrendingUp
 } from 'lucide-react';
 
 const stats = [
   {
     category: 'Inventory Optimization',
     icon: Package,
-    color: 'from-amber-500 to-orange-500',
     metrics: [
-      { label: 'Stockout Rate Reduction', value: 70, suffix: '%', before: '8-12%', after: '2-4%' },
-      { label: 'Excess Inventory Reduction', value: 50, suffix: '%', before: '$500K-$2M', after: '$200K-$800K' },
-      { label: 'Carrying Cost Reduction', value: 15, suffix: '%', before: '25-30%', after: '15-20%' },
-      { label: 'Dead Stock Write-offs', value: 70, suffix: '%', before: '$100K-$500K', after: '$30K-$150K' },
+      { label: 'Stockout Reduction', value: 70, suffix: '%' },
+      { label: 'Excess Inventory', value: 50, suffix: '%' },
+      { label: 'Carrying Costs', value: 15, suffix: '%' },
+      { label: 'Dead Stock', value: 70, suffix: '%' },
     ],
   },
   {
     category: 'Production Efficiency',
     icon: Factory,
-    color: 'from-violet-500 to-purple-500',
     metrics: [
-      { label: 'Schedule Adherence', value: 25, suffix: '%', before: '70-80%', after: '90-95%' },
-      { label: 'Setup Time Reduction', value: 40, suffix: '%', before: 'Baseline', after: '-20-40%' },
-      { label: 'OEE Improvement', value: 20, suffix: '%', before: '60-70%', after: '75-85%' },
-      { label: 'Late Deliveries Reduction', value: 60, suffix: '%', before: '15-25%', after: '5-10%' },
+      { label: 'Schedule Adherence', value: 25, suffix: '%' },
+      { label: 'Setup Time', value: 40, suffix: '%' },
+      { label: 'OEE Improvement', value: 20, suffix: '%' },
+      { label: 'Late Deliveries', value: 60, suffix: '%' },
     ],
   },
   {
     category: 'Supply Chain Savings',
     icon: Truck,
-    color: 'from-emerald-500 to-teal-500',
     metrics: [
-      { label: 'Procurement Cost Reduction', value: 15, suffix: '%', before: 'Baseline', after: '-8-15%' },
-      { label: 'RFQ Cycle Time', value: 70, suffix: '%', before: '5-10 days', after: '2-3 days' },
-      { label: 'Invoice Processing', value: 80, suffix: '%', before: '5-10 days', after: '1-2 days' },
-      { label: 'Supplier Issue Detection', value: 100, suffix: '%', before: 'Reactive', after: 'Predictive' },
+      { label: 'Procurement Cost', value: 15, suffix: '%' },
+      { label: 'RFQ Cycle Time', value: 70, suffix: '%' },
+      { label: 'Invoice Processing', value: 80, suffix: '%' },
+      { label: 'Issue Detection', value: 100, suffix: '%' },
     ],
   },
   {
     category: 'Document Processing',
     icon: FileText,
-    color: 'from-blue-500 to-cyan-500',
     metrics: [
-      { label: 'Data Entry Time', value: 90, suffix: '%', before: '40+ hrs/week', after: '4-8 hrs/week' },
-      { label: 'Data Entry Errors', value: 90, suffix: '%', before: '2-5%', after: '<0.5%' },
-      { label: 'Processing Backlog', value: 95, suffix: '%', before: 'Days-Weeks', after: 'Same Day' },
-      { label: 'Staff Required', value: 75, suffix: '%', before: '2-4 clerks', after: '0.5 FTE' },
+      { label: 'Data Entry Time', value: 90, suffix: '%' },
+      { label: 'Entry Errors', value: 90, suffix: '%' },
+      { label: 'Backlog Cleared', value: 95, suffix: '%' },
+      { label: 'Staff Needed', value: 75, suffix: '%' },
     ],
   },
 ];
 
 const timeSavings = [
-  { task: 'Create Purchase Order', manual: '15-20 min', flowsense: '2-3 min', saved: '85%' },
-  { task: 'Process Supplier Invoice', manual: '10-15 min', flowsense: '1 min', saved: '93%' },
-  { task: 'Generate Production Schedule', manual: '2-4 hours', flowsense: '5 min', saved: '95%' },
-  { task: 'Create Picking Wave', manual: '30-60 min', flowsense: '2 min', saved: '95%' },
-  { task: 'Bank Reconciliation', manual: '2-4 hours', flowsense: '15 min', saved: '90%' },
-  { task: 'Month-End Inventory Count', manual: '2-3 days', flowsense: '4-6 hours', saved: '75%' },
+  { task: 'Create Purchase Order', manual: '15-20 min', flowsense: '2-3 min', saved: 85 },
+  { task: 'Process Supplier Invoice', manual: '10-15 min', flowsense: '1 min', saved: 93 },
+  { task: 'Generate Production Schedule', manual: '2-4 hours', flowsense: '5 min', saved: 95 },
+  { task: 'Create Picking Wave', manual: '30-60 min', flowsense: '2 min', saved: 95 },
+  { task: 'Bank Reconciliation', manual: '2-4 hours', flowsense: '15 min', saved: 90 },
+  { task: 'Month-End Inventory', manual: '2-3 days', flowsense: '4-6 hours', saved: 75 },
 ];
 
 function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -70,8 +65,8 @@ function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string
 
   useEffect(() => {
     if (isInView) {
-      const duration = 2000;
-      const steps = 60;
+      const duration = 1500;
+      const steps = 50;
       const stepValue = value / steps;
       let current = 0;
       const interval = setInterval(() => {
@@ -94,31 +89,119 @@ function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string
   );
 }
 
+// Circular Progress Ring Component
+function ProgressRing({ value, size = 60, strokeWidth = 5 }: { value: number; size?: number; strokeWidth?: number }) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const [progress, setProgress] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => setProgress(value), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, value]);
+
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div ref={ref} className="relative" style={{ width: size, height: size }}>
+      <svg className="transform -rotate-90" width={size} height={size}>
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          className="text-stone-200"
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="url(#gradient)"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          className="transition-all duration-1000 ease-out"
+        />
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#708238" />
+            <stop offset="100%" stopColor="#5c6b2e" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-sm font-bold text-[#3D2314]">{value}%</span>
+      </div>
+    </div>
+  );
+}
+
 export default function Stats() {
   return (
-    <section id="stats" className="py-24 bg-white">
+    <section id="stats" className="py-12 bg-gradient-to-b from-white to-[#f8faf5] overflow-hidden">
       <div className="container-custom">
-        {/* Header */}
+        {/* Header - Left aligned like other sections */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="mb-10 md:mb-14"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-medium mb-4">
-            Real Business Impact
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            <span className="gradient-text">Quantified Cost Savings</span>{' '}
-            from Day One
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-1 bg-gradient-to-r from-[#708238] to-[#5c6b2e] rounded-full" />
+            <span className="text-[#708238] text-sm font-semibold uppercase tracking-wider">Real Business Impact</span>
+          </div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#3D2314] mb-3 max-w-2xl">
+            Quantified Cost Savings from Day One
           </h2>
-          <p className="text-lg text-neutral-600">
+          <p className="text-sm md:text-base text-[#44403c] max-w-xl">
             See the measurable ROI that FlowSense delivers across every area of your manufacturing operations.
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        {/* Stats - Mobile/Tablet: Horizontal scroll cards */}
+        <div className="lg:hidden mb-6">
+          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+            {stats.map((category, categoryIndex) => (
+              <motion.div
+                key={category.category}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: categoryIndex * 0.1 }}
+                className="flex-shrink-0 w-[280px] snap-start bg-white rounded-xl p-4 border border-stone-200/80 shadow-sm"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#708238] flex items-center justify-center">
+                    <category.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#3D2314]">{category.category}</h3>
+                </div>
+                <div className="grid grid-cols-4 gap-2">
+                  {category.metrics.map((metric) => (
+                    <div key={metric.label} className="text-center">
+                      <div className="text-lg font-bold text-[#708238]">
+                        <AnimatedNumber value={metric.value} suffix={metric.suffix} />
+                      </div>
+                      <div className="text-[8px] text-[#44403c] leading-tight">{metric.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stats - Desktop: Full Grid */}
+        <div className="hidden lg:grid lg:grid-cols-4 gap-4 mb-8">
           {stats.map((category, categoryIndex) => (
             <motion.div
               key={category.category}
@@ -126,53 +209,27 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: categoryIndex * 0.1 }}
-              className="bg-neutral-50 rounded-3xl p-8"
+              className="group relative bg-white rounded-2xl p-5 border border-stone-200/80 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
             >
-              {/* Category Header */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center`}>
-                  <category.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900">{category.category}</h3>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#708238]/5 to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#708238] to-[#5c6b2e] flex items-center justify-center mb-4 shadow-md">
+                <category.icon className="w-6 h-6 text-white" />
               </div>
-
-              {/* Metrics */}
-              <div className="space-y-4">
+              <h3 className="text-base font-bold text-[#3D2314] mb-4">{category.category}</h3>
+              <div className="grid grid-cols-2 gap-3">
                 {category.metrics.map((metric, metricIndex) => (
                   <motion.div
                     key={metric.label}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: categoryIndex * 0.1 + metricIndex * 0.05 }}
-                    className="bg-white rounded-xl p-4"
+                    className="text-center p-2 rounded-xl bg-[#708238]/5 hover:bg-[#708238]/10 transition-colors"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-neutral-700 font-medium">{metric.label}</span>
-                      <span className="text-2xl font-bold text-green-600">
-                        <AnimatedNumber value={metric.value} suffix={metric.suffix} />
-                      </span>
+                    <div className="text-xl font-bold text-[#708238]">
+                      <AnimatedNumber value={metric.value} suffix={metric.suffix} />
                     </div>
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className="flex items-center gap-1 text-neutral-400">
-                        <TrendingDown className="w-4 h-4" />
-                        <span>Before: {metric.before}</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-green-600">
-                        <TrendingUp className="w-4 h-4" />
-                        <span>After: {metric.after}</span>
-                      </div>
-                    </div>
-                    {/* Progress Bar */}
-                    <div className="mt-3 h-2 bg-neutral-100 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${metric.value}%` }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.5, duration: 1 }}
-                        className={`h-full bg-gradient-to-r ${category.color} rounded-full`}
-                      />
-                    </div>
+                    <div className="text-[10px] text-[#44403c] leading-tight mt-0.5">{metric.label}</div>
                   </motion.div>
                 ))}
               </div>
@@ -180,55 +237,90 @@ export default function Stats() {
           ))}
         </div>
 
-        {/* Time Savings Table */}
+        {/* Time Savings - Mobile/Tablet: Minimal */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-primary-900 via-accent-900 to-primary-800 rounded-3xl p-8 md:p-12"
+          className="lg:hidden bg-gradient-to-br from-[#3D2314] to-[#4a2d1a] rounded-2xl p-5 overflow-hidden"
         >
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
-              <Clock className="w-6 h-6 text-white" />
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#708238] flex items-center justify-center">
+                <Clock className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-white">Time Savings</h3>
             </div>
-            <div>
-              <h3 className="text-2xl font-bold text-white">Time Savings by Task</h3>
-              <p className="text-white/60">Automated vs. Manual Comparison</p>
-            </div>
+            <span className="text-[#a8b86a] text-sm font-bold">88% faster</span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="text-left text-white/60 text-sm border-b border-white/10">
-                  <th className="pb-4 font-medium">Task</th>
-                  <th className="pb-4 font-medium">Manual Time</th>
-                  <th className="pb-4 font-medium">With FlowSense</th>
-                  <th className="pb-4 font-medium text-right">Time Saved</th>
-                </tr>
-              </thead>
-              <tbody>
-                {timeSavings.map((item, index) => (
-                  <motion.tr
-                    key={item.task}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="border-b border-white/5 hover:bg-white/5 transition-colors"
-                  >
-                    <td className="py-4 text-white font-medium">{item.task}</td>
-                    <td className="py-4 text-white/60">{item.manual}</td>
-                    <td className="py-4 text-secondary-400">{item.flowsense}</td>
-                    <td className="py-4 text-right">
-                      <span className="inline-block px-3 py-1 rounded-full bg-green-500/20 text-green-400 font-bold">
-                        {item.saved}
-                      </span>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-3 gap-2">
+            {timeSavings.slice(0, 6).map((item) => (
+              <div key={item.task} className="bg-white/5 rounded-xl p-3 text-center">
+                <div className="text-xl font-bold text-[#a8b86a] mb-1">{item.saved}%</div>
+                <div className="text-[10px] text-white/60 leading-tight line-clamp-2">{item.task}</div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Time Savings - Desktop: Full Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="hidden lg:block relative bg-gradient-to-br from-[#3D2314] via-[#4a2d1a] to-[#2d1a0f] rounded-3xl p-10 overflow-hidden"
+        >
+          {/* Background decorations */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#708238]/20 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#708238]/10 to-transparent rounded-full blur-2xl" />
+
+          <div className="relative">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#708238] to-[#5c6b2e] flex items-center justify-center shadow-2xl">
+                  <Clock className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Time Savings</h3>
+                  <p className="text-white/50 text-sm">Manual vs Automated Comparison</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                <TrendingUp className="w-4 h-4 text-[#a8b86a]" />
+                <span className="text-white/80 text-sm">Average <span className="text-[#a8b86a] font-bold">88%</span> faster</span>
+              </div>
+            </div>
+
+            {/* Time Savings Grid */}
+            <div className="grid grid-cols-6 gap-3">
+              {timeSavings.map((item, index) => (
+                <motion.div
+                  key={item.task}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="group relative bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                >
+                  <div className="text-4xl font-bold text-[#a8b86a] mb-2">
+                    {item.saved}%
+                  </div>
+                  <h4 className="text-sm font-medium text-white mb-3 leading-tight min-h-[40px]">{item.task}</h4>
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-white/40">Before</span>
+                      <span className="text-white/60 line-through">{item.manual}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#a8b86a]/80">After</span>
+                      <span className="text-[#a8b86a] font-semibold">{item.flowsense}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

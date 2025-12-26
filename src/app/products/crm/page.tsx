@@ -1,177 +1,212 @@
 'use client';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Users, CheckCircle2, ArrowRight, Brain, TrendingUp, UserCheck, Target } from 'lucide-react';
+import { Users, CheckCircle2, ArrowRight, Brain, TrendingUp, Target, Zap, Shield, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const features = [
   {
     title: 'Customer 360° View',
-    description: 'Complete visibility into customer interactions, orders, payments, and communication history in one place.',
+    description: 'Complete visibility into customer interactions, orders, and communication history.',
     icon: Users,
   },
   {
     title: 'AI Lead Scoring',
-    description: 'Automatically prioritize leads based on AI analysis of conversion probability and deal value.',
+    description: 'Automatically prioritize leads based on conversion probability.',
     icon: Brain,
   },
   {
     title: 'Churn Prediction',
-    description: 'AI identifies at-risk customers before they leave, giving you time to take action.',
+    description: 'AI identifies at-risk customers before they leave.',
     icon: TrendingUp,
   },
   {
     title: 'Opportunity Pipeline',
-    description: 'Visual pipeline management with AI-powered deal forecasting and win probability analysis.',
+    description: 'Visual pipeline with AI-powered deal forecasting.',
     icon: Target,
   },
 ];
 
-const benefits = [
-  '30% increase in lead conversion',
-  '50% reduction in customer churn',
-  '25% faster sales cycle',
-  '360° customer visibility',
-  'Automated follow-up reminders',
-  'Integrated communication tracking',
+const stats = [
+  { value: '30%', label: 'Lead Conversion', icon: TrendingUp },
+  { value: '50%', label: 'Less Churn', icon: Shield },
+  { value: '25%', label: 'Faster Sales', icon: Zap },
+  { value: '360°', label: 'Customer View', icon: BarChart3 },
 ];
 
 export default function CRMPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-24 bg-gradient-to-br from-pink-50 via-white to-rose-50">
-          <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-100 text-pink-700 text-sm font-medium mb-4">
-                  <Users className="w-4 h-4" />
-                  <span>CRM Module</span>
-                </div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  Customer Relationship{' '}
-                  <span className="gradient-text">Management</span>
-                </h1>
-                <p className="text-xl text-neutral-600 mb-8">
-                  Complete customer 360° view with AI-powered opportunity forecasting, smart lead scoring, and churn prediction to maximize customer lifetime value.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/#get-started"
-                    className="btn-gradient px-8 py-4 rounded-full font-semibold text-center"
+    <main className="pt-20">
+      {/* Hero Section - Minimal */}
+      <section className="py-16 bg-gradient-to-br from-[#708238]/5 via-white to-[#708238]/10">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#708238]/20 text-[#5c6b2e] text-sm font-medium mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#708238]"></span>
+                <span>CRM Module</span>
+              </div>
+
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-[#3D2314]">
+                Customer Relationship{' '}
+                <span className="bg-gradient-to-r from-[#708238] to-[#5c6b2e] bg-clip-text text-transparent">
+                  Management
+                </span>
+              </h1>
+
+              <p className="text-lg text-neutral-600 mb-6 max-w-md">
+                Complete customer 360° view with AI-powered forecasting, lead scoring, and churn prediction.
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <Link href="/#get-started">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-3 bg-gradient-to-r from-[#708238] to-[#5c6b2e] text-white rounded-xl font-semibold flex items-center gap-2 shadow-lg shadow-[#708238]/20"
                   >
                     Start Free Trial
-                  </Link>
-                  <Link
-                    href="/#demo"
-                    className="px-8 py-4 border-2 border-neutral-200 rounded-full font-semibold text-center hover:border-primary-500 transition-colors"
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.button>
+                </Link>
+                <Link href="/#demo">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-3 bg-white border border-neutral-200 rounded-xl font-semibold text-[#3D2314] hover:border-[#708238] transition-colors"
                   >
                     Book a Demo
-                  </Link>
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="relative"
-              >
-                <div className="rounded-3xl overflow-hidden shadow-xl mb-8">
-                  <Image
-                    src="/isometric-erp.jpg"
-                    alt="CRM Module"
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-                <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
-                  <h3 className="font-bold text-lg mb-4">Key Benefits</h3>
-                  <ul className="space-y-3">
-                    {benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-center gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-neutral-700">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-24 bg-white">
-          <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-3xl mx-auto mb-16"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Powerful <span className="gradient-text">Features</span>
-              </h2>
-              <p className="text-lg text-neutral-600">
-                Everything you need to manage customer relationships effectively.
-              </p>
+                  </motion.button>
+                </Link>
+              </div>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {features.map((feature, index) => (
+            {/* Stats Grid */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {stats.map((stat, index) => (
                 <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-neutral-50 rounded-2xl p-8"
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.05 }}
+                  whileHover={{ y: -4 }}
+                  className="bg-white rounded-2xl p-5 border border-neutral-100 shadow-sm hover:shadow-md transition-all"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center mb-4">
-                    <feature.icon className="w-7 h-7 text-white" />
+                  <div className="w-10 h-10 rounded-xl bg-[#708238]/10 flex items-center justify-center mb-3">
+                    <stat.icon className="w-5 h-5 text-[#708238]" />
                   </div>
-                  <h3 className="text-xl font-bold text-neutral-900 mb-2">{feature.title}</h3>
-                  <p className="text-neutral-600">{feature.description}</p>
+                  <p className="text-3xl font-bold text-[#708238] mb-0.5">{stat.value}</p>
+                  <p className="text-sm text-neutral-500">{stat.label}</p>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-24 bg-gradient-to-br from-pink-600 to-rose-600">
-          <div className="container-custom text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Ready to Transform Your Customer Relationships?
-              </h2>
-              <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-                Start your 14-day free trial and see how AI-powered CRM can boost your sales.
-              </p>
-              <Link
-                href="/#get-started"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-pink-600 rounded-full font-semibold hover:bg-neutral-100 transition-colors"
-              >
-                <span>Get Started Free</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
             </motion.div>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+        </div>
+      </section>
+
+      {/* Features Section - Modern Design */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl mb-12"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-0.5 bg-[#708238]" />
+              <span className="text-sm font-semibold tracking-widest text-[#708238] uppercase">
+                CRM Features
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-[#3D2314]">
+              4 Powerful Tools to Maximize Customer Value
+            </h2>
+            <p className="text-lg text-neutral-600">
+              Everything you need to manage customer relationships effectively.
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="group relative flex gap-5 p-6 rounded-2xl hover:bg-[#708238]/5 transition-all cursor-pointer"
+              >
+                {/* Left accent line */}
+                <div className="absolute left-0 top-6 bottom-6 w-0.5 bg-neutral-200 group-hover:bg-gradient-to-b group-hover:from-[#708238] group-hover:to-[#5c6b2e] transition-all" />
+
+                {/* Number */}
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#708238]/10 flex items-center justify-center text-sm font-bold text-[#708238] group-hover:bg-[#708238] group-hover:text-white transition-all">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-semibold text-[#3D2314] group-hover:text-[#5c6b2e] transition-colors">
+                      {feature.title}
+                    </h3>
+                    <feature.icon className="w-5 h-5 text-[#708238] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="text-neutral-600 leading-relaxed">{feature.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Compact */}
+      <section className="py-12 md:py-16 bg-gradient-to-br from-[#708238] to-[#5c6b2e]">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Ready to transform your customer relationships?
+            </h2>
+            <p className="text-white/70 mb-6">
+              Start your 14-day free trial. No credit card required.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <Link href="/#get-started">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full sm:w-auto px-6 py-3 bg-white text-[#5c6b2e] rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-neutral-100 transition-colors"
+                >
+                  Get Started Free
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              </Link>
+              <Link href="/#demo">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full sm:w-auto px-6 py-3 bg-white/10 text-white border border-white/20 rounded-xl font-semibold hover:bg-white/20 transition-colors"
+                >
+                  Book a Demo
+                </motion.button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </main>
   );
 }

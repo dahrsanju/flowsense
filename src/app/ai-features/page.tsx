@@ -1,7 +1,5 @@
-import Header from '@/components/Header';
 import AIFeatures from '@/components/sections/AIFeatures';
 import CTA from '@/components/sections/CTA';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 
 export const metadata = {
@@ -11,9 +9,7 @@ export const metadata = {
 
 export default function AIFeaturesPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
+    <main className="pt-20">
         {/* Hero Banner with Image */}
         <section className="py-16 bg-gradient-to-br from-primary-50 via-white to-accent-50">
           <div className="container-custom">
@@ -43,8 +39,6 @@ export default function AIFeaturesPage() {
         </section>
         <AIFeatures />
         <CTA />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

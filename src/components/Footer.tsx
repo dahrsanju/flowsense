@@ -66,51 +66,38 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-950 text-white">
+    <footer className="bg-[#2d3319] text-white pt-10 pb-4">
       {/* Main Footer */}
-      <div className="container-custom py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+      <div className="container-custom pb-10">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
           {/* Brand Column */}
           <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden">
-                <Image src="/logo.jfif" alt="FlowSense ERP" fill className="object-cover" />
+            <Link href="/" className="flex items-center gap-2.5 group mb-4">
+              <div className="flex items-center justify-center w-11 h-11 bg-gradient-to-br from-[#708238] to-[#5c6b2e] rounded-xl">
+                <span className="text-white font-black text-2xl italic">F</span>
               </div>
-              <span className="text-2xl font-bold">
-                <span className="gradient-text">Flow</span>
-                <span className="text-white">Sense</span>
-              </span>
+              <div className="flex flex-col leading-none">
+                <span className="text-2xl font-bold text-white">
+                  Flow<span className="text-[#9aab5a]">Sense</span>
+                </span>
+                <span className="text-[9px] uppercase tracking-[0.15em] text-white/50">
+                  Smart Manufacturing
+                </span>
+              </div>
             </Link>
-            <p className="text-neutral-400 mb-6 max-w-xs">
-              AI-powered manufacturing ERP that transforms operations with intelligent automation and predictive insights.
+            <p className="text-white/60 text-sm mb-5">
+              AI-powered manufacturing ERP for intelligent automation.
             </p>
-
-            {/* Contact Info */}
-            <div className="space-y-3 mb-6">
-              <a href="mailto:hello@flowsense.ai" className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors">
-                <Mail className="w-5 h-5" />
-                <span>hello@flowsense.ai</span>
-              </a>
-              <a href="tel:+919876543210" className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors">
-                <Phone className="w-5 h-5" />
-                <span>+91 98765 43210</span>
-              </a>
-              <div className="flex items-start gap-3 text-neutral-400">
-                <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span>123 Tech Park, Electronic City,<br />Bangalore, Karnataka 560100</span>
-              </div>
-            </div>
-
             {/* Social Links */}
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center hover:bg-primary-600 transition-colors"
+                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#708238] transition-colors"
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -119,16 +106,15 @@ export default function Footer() {
           {/* Link Columns */}
           {Object.values(footerLinks).map((section) => (
             <div key={section.title}>
-              <h3 className="font-semibold text-white mb-4">{section.title}</h3>
-              <ul className="space-y-3">
+              <h3 className="font-semibold text-white mb-3 text-sm">{section.title}</h3>
+              <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-1 group"
+                      className="text-white/60 hover:text-white transition-colors text-sm"
                     >
-                      <span>{link.label}</span>
-                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {link.label}
                     </Link>
                   </li>
                 ))}
@@ -139,23 +125,19 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-neutral-800">
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-neutral-500 text-sm">
-              &copy; {new Date().getFullYear()} FlowSense Technologies Pvt. Ltd. All rights reserved.
-            </p>
-            <div className="flex items-center gap-6">
-              <Link href="/about" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/about" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/about" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                Cookie Policy
-              </Link>
+      <div className="border-t border-white/10 mt-6 pt-5 pb-4">
+        <div className="container-custom">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/50">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2">
+              <a href="mailto:hello@flowsense.ai" className="hover:text-white transition-colors">
+                hello@flowsense.ai
+              </a>
+              <a href="tel:+919885285293" className="hover:text-white transition-colors">
+                +91 9885285293
+              </a>
+              <span>Hyderabad, India</span>
             </div>
+            <p className="mr-4">&copy; {new Date().getFullYear()} FlowSense Technologies</p>
           </div>
         </div>
       </div>
@@ -170,10 +152,10 @@ export default function Footer() {
             name: 'FlowSense ERP',
             description: 'AI-powered manufacturing ERP software for intelligent operations management',
             url: 'https://flowsense.ai',
-            logo: 'https://flowsense.ai/logo.jfif',
+            logo: 'https://flowsense.ai/FS_logo.jpeg',
             contactPoint: {
               '@type': 'ContactPoint',
-              telephone: '+91-98765-43210',
+              telephone: '+91-9885285293',
               contactType: 'sales',
               areaServed: 'IN',
               availableLanguage: ['English', 'Hindi'],

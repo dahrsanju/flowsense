@@ -1,170 +1,242 @@
 'use client';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Package, CheckCircle2, ArrowRight, Brain, TrendingUp, AlertTriangle, BarChart3 } from 'lucide-react';
+import { Package, ArrowRight, Brain, AlertTriangle, BarChart3, ChevronRight, Layers, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 
 const features = [
   {
     title: 'Real-time Tracking',
     description: 'Track inventory levels across all locations in real-time with automatic updates and alerts.',
-    icon: Package,
+    icon: RefreshCw,
+    stat: '100%',
+    statLabel: 'Visibility',
   },
   {
     title: 'AI Demand Forecasting',
     description: 'ML-powered forecasting with 85-95% accuracy to optimize stock levels and prevent stockouts.',
     icon: Brain,
+    stat: '95%',
+    statLabel: 'Accuracy',
   },
   {
     title: 'Batch/Lot Management',
     description: 'Complete traceability with batch tracking, expiry management, and FIFO/FEFO enforcement.',
-    icon: BarChart3,
+    icon: Layers,
+    stat: '100%',
+    statLabel: 'Traceability',
   },
   {
     title: 'Dead Stock Alerts',
     description: 'AI identifies slow-moving inventory and suggests actions to reduce carrying costs.',
     icon: AlertTriangle,
+    stat: '30%',
+    statLabel: 'Cost Saved',
   },
-];
-
-const benefits = [
-  '40% reduction in stockouts',
-  '30% lower carrying costs',
-  '85-95% forecast accuracy',
-  'Real-time stock visibility',
-  'Automatic reorder alerts',
-  'Multi-location support',
 ];
 
 export default function InventoryPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-24 bg-gradient-to-br from-amber-50 via-white to-orange-50">
-          <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-medium mb-4">
-                  <Package className="w-4 h-4" />
-                  <span>Inventory Module</span>
-                </div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  Inventory{' '}
-                  <span className="gradient-text">Management</span>
-                </h1>
-                <p className="text-xl text-neutral-600 mb-8">
-                  Real-time stock tracking with AI demand forecasting and automatic reorder optimization. Never face stockouts or overstock situations again.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/#get-started"
-                    className="btn-gradient px-8 py-4 rounded-full font-semibold text-center"
-                  >
-                    Start Free Trial
-                  </Link>
-                  <Link
-                    href="/#demo"
-                    className="px-8 py-4 border-2 border-neutral-200 rounded-full font-semibold text-center hover:border-primary-500 transition-colors"
-                  >
-                    Book a Demo
-                  </Link>
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="relative"
-              >
-                <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-8">
-                  <Package className="w-10 h-10 text-white" />
-                </div>
-                <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
-                  <h3 className="font-bold text-lg mb-4">Key Benefits</h3>
-                  <ul className="space-y-3">
-                    {benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-center gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-neutral-700">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+    <main className="pt-20">
+      {/* Hero Section - Large Typography */}
+      <section className="py-20 md:py-28 bg-[#fafaf8] relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-[#708238]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#708238]/5 rounded-full blur-3xl" />
 
-        {/* Features Section */}
-        <section className="py-24 bg-white">
-          <div className="container-custom">
+        <div className="container-custom relative">
+          <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-3xl mx-auto mb-16"
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Powerful <span className="gradient-text">Features</span>
-              </h2>
-              <p className="text-lg text-neutral-600">
-                Everything you need to optimize your inventory operations.
-              </p>
+              <span className="inline-flex items-center gap-2 text-[#708238] font-medium">
+                <Package className="w-5 h-5" />
+                Inventory Module
+              </span>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-neutral-50 rounded-2xl p-8"
-                >
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-4">
-                    <feature.icon className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-neutral-900 mb-2">{feature.title}</h3>
-                  <p className="text-neutral-600">{feature.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold text-[#3D2314] mb-6 leading-[0.9]"
+            >
+              Smart
+              <br />
+              <span className="text-[#708238]">Inventory</span>
+              <br />
+              Control
+            </motion.h1>
 
-        {/* CTA Section */}
-        <section className="py-24 bg-gradient-to-br from-amber-600 to-orange-600">
-          <div className="container-custom text-center">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-neutral-600 max-w-md mb-8"
+            >
+              AI-powered stock management that predicts demand and prevents costly stockouts.
+            </motion.p>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap gap-4"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Ready to Optimize Your Inventory?
-              </h2>
-              <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-                Start your 14-day free trial and see how AI-powered inventory management can reduce costs.
-              </p>
-              <Link
-                href="/#get-started"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-amber-600 rounded-full font-semibold hover:bg-neutral-100 transition-colors"
-              >
-                <span>Get Started Free</span>
-                <ArrowRight className="w-5 h-5" />
+              <Link href="/#get-started">
+                <button className="group px-6 py-3.5 bg-[#708238] text-white rounded-full font-semibold flex items-center gap-2 hover:bg-[#5c6b2e] transition-colors">
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </Link>
+              <Link href="/#demo">
+                <button className="px-6 py-3.5 text-[#3D2314] font-semibold flex items-center gap-2 hover:text-[#708238] transition-colors">
+                  Watch Demo
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </Link>
             </motion.div>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+
+          {/* Floating Stats */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+            className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2"
+          >
+            <div className="space-y-4">
+              {[
+                { value: '40%', label: 'Less Stockouts' },
+                { value: '30%', label: 'Cost Reduction' },
+                { value: '95%', label: 'Forecast Accuracy' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1 }}
+                  className="text-right"
+                >
+                  <p className="text-4xl font-bold text-[#708238]">{stat.value}</p>
+                  <p className="text-sm text-neutral-500">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section - Horizontal Cards */}
+      <section className="py-20 bg-white">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
+          >
+            <div>
+              <span className="text-[#708238] font-semibold text-sm uppercase tracking-wider mb-2 block">
+                Features
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#3D2314]">
+                Why choose our
+                <br />
+                <span className="text-[#708238]">inventory system?</span>
+              </h2>
+            </div>
+            <p className="text-neutral-600 max-w-sm">
+              Four powerful modules working together to optimize your stock management.
+            </p>
+          </motion.div>
+
+          {/* Horizontal Feature Cards */}
+          <div className="space-y-4">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="flex flex-col md:flex-row md:items-center gap-6 p-6 md:p-8 rounded-2xl border border-neutral-100 hover:border-[#708238]/30 hover:bg-[#708238]/[0.02] transition-all">
+                  {/* Number & Icon */}
+                  <div className="flex items-center gap-4 md:w-48 flex-shrink-0">
+                    <span className="text-5xl font-bold text-neutral-200 group-hover:text-[#708238]/20 transition-colors">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div className="w-12 h-12 rounded-xl bg-[#708238]/10 flex items-center justify-center group-hover:bg-[#708238] transition-colors">
+                      <feature.icon className="w-6 h-6 text-[#708238] group-hover:text-white transition-colors" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-[#3D2314] mb-2 group-hover:text-[#708238] transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-neutral-600">{feature.description}</p>
+                  </div>
+
+                  {/* Stat */}
+                  <div className="md:text-right md:w-32 flex-shrink-0">
+                    <p className="text-3xl font-bold text-[#708238]">{feature.stat}</p>
+                    <p className="text-sm text-neutral-500">{feature.statLabel}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Floating Card */}
+      <section className="py-20 bg-[#fafaf8]">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative bg-[#708238] rounded-3xl p-10 md:p-14 overflow-hidden"
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full translate-y-1/2 -translate-x-1/2" />
+            </div>
+
+            <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+                  Ready to optimize your inventory?
+                </h2>
+                <p className="text-white/70 max-w-md">
+                  Join 500+ manufacturers using AI-powered inventory management.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="/#get-started">
+                  <button className="w-full sm:w-auto px-6 py-3.5 bg-white text-[#5c6b2e] rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-neutral-100 transition-colors">
+                    Get Started Free
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </Link>
+                <Link href="/#demo">
+                  <button className="w-full sm:w-auto px-6 py-3.5 text-white border border-white/30 rounded-full font-semibold hover:bg-white/10 transition-colors">
+                    Book a Demo
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </main>
   );
 }

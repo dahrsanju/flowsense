@@ -1,7 +1,5 @@
 'use client';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Target, Users, Lightbulb, Award, MapPin, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
@@ -39,9 +37,7 @@ const stats = [
 
 export default function AboutPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
+    <main className="pt-20">
         {/* Hero Section */}
         <section className="py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50">
           <div className="container-custom">
@@ -281,8 +277,6 @@ export default function AboutPage() {
             </motion.div>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

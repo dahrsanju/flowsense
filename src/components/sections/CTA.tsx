@@ -1,96 +1,158 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Phone, Mail, MessageCircle } from 'lucide-react';
+import { ArrowRight, Phone, Mail, MessageCircle, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CTA() {
   return (
-    <section id="get-started" className="py-24 bg-white">
-      <div className="container-custom">
+    <section id="demo" className="py-10 lg:py-12 bg-white">
+      <div id="get-started" className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-accent-600 to-primary-700 p-8 md:p-16"
+          className="relative overflow-hidden rounded-2xl lg:rounded-3xl bg-gradient-to-br from-[#3D2314] via-[#4a2d1a] to-[#3D2314]"
         >
-          {/* Background Elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-400/20 rounded-full blur-3xl" />
+          {/* Background decoration - Hidden on mobile */}
+          <div className="absolute inset-0 hidden lg:block">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#708238]/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" />
+            <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-[#708238]/10 rounded-full blur-3xl" />
+          </div>
 
-          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-sm font-medium mb-6">
-                <Sparkles className="w-4 h-4" />
-                <span>Start Your AI Journey Today</span>
-              </div>
+          {/* Mobile/Tablet: Minimal Layout */}
+          <div className="lg:hidden p-6 text-center">
+            <h2 className="text-xl font-bold text-white mb-2">
+              Ready to Transform Your Operations?
+            </h2>
+            <p className="text-white/50 text-sm mb-5">
+              Join 500+ manufacturers. Start your free trial today.
+            </p>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                Ready to Transform Your Manufacturing Operations?
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-2 justify-center mb-5">
+              <Link
+                href="#trial"
+                className="px-6 py-3 bg-[#708238] text-white rounded-xl font-semibold text-sm flex items-center justify-center gap-2"
+              >
+                Start Free Trial
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="#demo"
+                className="px-6 py-3 bg-white/10 text-white rounded-xl font-semibold text-sm"
+              >
+                Book Demo
+              </Link>
+            </div>
+
+            {/* Contact - Inline */}
+            <div className="flex flex-wrap justify-center gap-4 pt-4 border-t border-white/10">
+              <a href="tel:+919876543210" className="flex items-center gap-1.5 text-white/60 text-xs">
+                <Phone className="w-3.5 h-3.5 text-[#a8b86a]" />
+                <span>+91 98765 43210</span>
+              </a>
+              <a href="mailto:hello@flowsense.ai" className="flex items-center gap-1.5 text-white/60 text-xs">
+                <Mail className="w-3.5 h-3.5 text-[#a8b86a]" />
+                <span>hello@flowsense.ai</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Desktop: Full Layout */}
+          <div className="relative z-10 hidden lg:grid lg:grid-cols-5 gap-8">
+            {/* Left Content - 3 cols */}
+            <div className="lg:col-span-3 p-12">
+              <span className="inline-block text-[#a8b86a] text-sm font-semibold uppercase tracking-wider mb-4">
+                Start Your AI Journey
+              </span>
+
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                Ready to Transform Your
+                <br />
+                <span className="text-[#a8b86a]">Manufacturing Operations?</span>
               </h2>
 
-              <p className="text-lg text-white/80 mb-8">
-                Join 500+ manufacturers who have already revolutionized their operations with FlowSense. Start your 14-day free trial today.
+              <p className="text-white/60 text-base mb-6 max-w-md">
+                Join 500+ manufacturers who have revolutionized their operations with FlowSense.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              {/* Trust points */}
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="flex items-center gap-2 text-white/70 text-sm">
+                  <CheckCircle2 className="w-4 h-4 text-[#a8b86a]" />
+                  <span>14-day free trial</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/70 text-sm">
+                  <CheckCircle2 className="w-4 h-4 text-[#a8b86a]" />
+                  <span>No credit card</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/70 text-sm">
+                  <CheckCircle2 className="w-4 h-4 text-[#a8b86a]" />
+                  <span>Full access</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-3">
                 <Link
                   href="#trial"
-                  className="px-8 py-4 bg-white text-primary-600 rounded-full font-semibold text-lg flex items-center justify-center gap-2 hover:bg-neutral-100 transition-colors"
+                  className="group px-7 py-3.5 bg-[#708238] text-white rounded-xl font-semibold text-sm flex items-center gap-2 hover:bg-[#5c6b2e] transition-all hover:shadow-lg hover:shadow-[#708238]/20"
                 >
-                  <span>Start Free Trial</span>
-                  <ArrowRight className="w-5 h-5" />
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
                 <Link
                   href="#demo"
-                  className="px-8 py-4 bg-white/10 text-white rounded-full font-semibold text-lg flex items-center justify-center gap-2 hover:bg-white/20 transition-colors border border-white/20"
+                  className="px-7 py-3.5 bg-white/10 text-white rounded-xl font-semibold text-sm hover:bg-white/20 transition-all border border-white/10"
                 >
-                  <span>Book a Demo</span>
+                  Book a Demo
                 </Link>
               </div>
-
-              <p className="mt-6 text-white/60 text-sm">
-                No credit card required. Full access to all features.
-              </p>
             </div>
 
-            {/* Right Content - Contact Options */}
-            <div className="space-y-4">
-              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold">Call Us</p>
-                    <p className="text-white/70">+91 98765 43210</p>
-                  </div>
-                </div>
-              </div>
+            {/* Right Content - 2 cols - Contact Card */}
+            <div className="lg:col-span-2 bg-white/5 backdrop-blur-sm p-10 flex flex-col justify-center border-l border-white/10">
+              <h3 className="text-white font-semibold text-lg mb-6">Get in Touch</h3>
 
-              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-white" />
+              <div className="space-y-4">
+                <a
+                  href="tel:+919876543210"
+                  className="group flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-[#708238]/20 flex items-center justify-center group-hover:bg-[#708238]/30 transition-colors">
+                    <Phone className="w-5 h-5 text-[#a8b86a]" />
                   </div>
                   <div>
-                    <p className="text-white font-semibold">Email Us</p>
-                    <p className="text-white/70">hello@flowsense.ai</p>
+                    <p className="text-white font-medium text-sm">Call Us</p>
+                    <p className="text-white/50 text-sm">+91 98765 43210</p>
                   </div>
-                </div>
-              </div>
+                </a>
 
-              <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-colors cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
-                    <MessageCircle className="w-6 h-6 text-white" />
+                <a
+                  href="mailto:hello@flowsense.ai"
+                  className="group flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-[#708238]/20 flex items-center justify-center group-hover:bg-[#708238]/30 transition-colors">
+                    <Mail className="w-5 h-5 text-[#a8b86a]" />
                   </div>
                   <div>
-                    <p className="text-white font-semibold">Live Chat</p>
-                    <p className="text-white/70">Available 24/7</p>
+                    <p className="text-white font-medium text-sm">Email Us</p>
+                    <p className="text-white/50 text-sm">hello@flowsense.ai</p>
                   </div>
-                </div>
+                </a>
+
+                <button
+                  className="group flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors w-full text-left"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-[#708238]/20 flex items-center justify-center group-hover:bg-[#708238]/30 transition-colors">
+                    <MessageCircle className="w-5 h-5 text-[#a8b86a]" />
+                  </div>
+                  <div>
+                    <p className="text-white font-medium text-sm">Live Chat</p>
+                    <p className="text-white/50 text-sm">Available 24/7</p>
+                  </div>
+                </button>
               </div>
             </div>
           </div>

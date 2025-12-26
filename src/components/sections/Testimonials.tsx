@@ -1,202 +1,174 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import Image from 'next/image';
 
 const testimonials = [
   {
+    id: 1,
     name: 'Rajesh Kumar',
     role: 'COO',
-    company: 'AutoParts Manufacturing Ltd',
-    industry: 'Automotive',
-    image: '/testimonials/1.jpg',
+    company: 'AutoParts Manufacturing',
+    image: 'https://randomuser.me/api/portraits/men/32.jpg',
     quote: 'FlowSense has transformed our production planning. The AI-powered scheduling reduced our setup times by 35% and we have not missed a JIT delivery in 6 months.',
-    stats: [
-      { label: 'Setup Time Reduction', value: '35%' },
-      { label: 'On-Time Delivery', value: '100%' },
-    ],
+    stat: { value: '35%', label: 'Setup Time Reduced' },
   },
   {
+    id: 2,
     name: 'Priya Sharma',
     role: 'Plant Manager',
     company: 'PharmaChem Industries',
-    industry: 'Pharmaceutical',
-    image: '/testimonials/2.jpg',
+    image: 'https://randomuser.me/api/portraits/women/44.jpg',
     quote: 'The batch traceability and GMP compliance features gave us peace of mind. We passed our FDA audit with zero observations for the first time in company history.',
-    stats: [
-      { label: 'Audit Score', value: '100%' },
-      { label: 'Compliance Issues', value: 'Zero' },
-    ],
+    stat: { value: '100%', label: 'Audit Score' },
   },
   {
+    id: 3,
     name: 'Arun Mehta',
     role: 'Supply Chain Director',
     company: 'ElectroniTech Solutions',
-    industry: 'Electronics',
-    image: '/testimonials/3.jpg',
+    image: 'https://randomuser.me/api/portraits/men/67.jpg',
     quote: 'Managing 5000+ SKUs was a nightmare before FlowSense. The AI demand forecasting has reduced our stockouts by 60% while cutting inventory carrying costs.',
-    stats: [
-      { label: 'Stockout Reduction', value: '60%' },
-      { label: 'Inventory Savings', value: '25%' },
-    ],
+    stat: { value: '60%', label: 'Stockout Reduction' },
   },
   {
+    id: 4,
     name: 'Sanjay Patel',
     role: 'Finance Director',
     company: 'FoodPro Industries',
-    industry: 'Food & Beverage',
-    image: '/testimonials/4.jpg',
+    image: 'https://randomuser.me/api/portraits/men/52.jpg',
     quote: 'The document scanning feature alone saved us 2 full-time data entry positions. Our invoice processing went from 5 days to same-day with 99% accuracy.',
-    stats: [
-      { label: 'Processing Time', value: '95% faster' },
-      { label: 'Staff Savings', value: '2 FTEs' },
-    ],
+    stat: { value: '95%', label: 'Faster Processing' },
   },
   {
+    id: 5,
     name: 'Meera Reddy',
     role: 'Quality Head',
     company: 'PrecisionMach Engineering',
-    industry: 'Industrial Equipment',
-    image: '/testimonials/5.jpg',
+    image: 'https://randomuser.me/api/portraits/women/65.jpg',
     quote: 'The predictive maintenance module predicted a critical spindle failure 2 weeks before it would have caused a production shutdown. That single save paid for the entire system.',
-    stats: [
-      { label: 'Downtime Prevented', value: '2 weeks' },
-      { label: 'ROI', value: '300%+' },
-    ],
+    stat: { value: '300%', label: 'ROI Achieved' },
   },
 ];
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
-  const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+  const current = testimonials[currentIndex];
 
   return (
-    <section id="testimonials" className="py-24 bg-white overflow-hidden">
+    <section id="testimonials" className="py-10 bg-white overflow-hidden">
       <div className="container-custom">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="mb-8"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-4">
-            Customer Success Stories
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            Trusted by <span className="gradient-text">Leading Manufacturers</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-1 bg-gradient-to-r from-[#708238] to-[#5c6b2e] rounded-full" />
+            <span className="text-[#708238] text-sm font-semibold uppercase tracking-wider">Customer Success Stories</span>
+          </div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#3D2314] mb-3 max-w-2xl">
+            Trusted by Leading Manufacturers
           </h2>
-          <p className="text-lg text-neutral-600">
+          <p className="text-sm md:text-base text-[#44403c] max-w-xl">
             See how manufacturing companies are achieving breakthrough results with FlowSense ERP.
           </p>
         </motion.div>
 
-        {/* Testimonials Carousel */}
-        <div className="relative">
-          {/* Main Testimonial */}
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-3xl p-8 md:p-12"
-          >
-            <div className="grid md:grid-cols-3 gap-8 items-center">
-              {/* Left - Quote */}
-              <div className="md:col-span-2">
-                <Quote className="w-12 h-12 text-primary-300 mb-6" />
-                <p className="text-xl md:text-2xl text-neutral-800 font-medium leading-relaxed mb-8">
-                  {testimonials[currentIndex].quote}
-                </p>
-
-                {/* Stats */}
-                <div className="flex flex-wrap gap-6 mb-8">
-                  {testimonials[currentIndex].stats.map((stat) => (
-                    <div key={stat.label} className="bg-white rounded-xl px-6 py-4 shadow-sm">
-                      <p className="text-2xl font-bold gradient-text">{stat.value}</p>
-                      <p className="text-sm text-neutral-500">{stat.label}</p>
+        {/* Testimonial Card */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              className="bg-gradient-to-br from-[#708238]/5 to-[#f8faf5] border border-[#708238]/10 rounded-2xl p-5 md:p-6"
+            >
+              {/* Compact Horizontal Layout */}
+              <div className="flex flex-col gap-4">
+                {/* Top Row - Author + Stat */}
+                <div className="flex items-center justify-between">
+                  {/* Author */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shadow-lg flex-shrink-0 ring-2 ring-[#708238]/20">
+                      <Image
+                        src={current.image}
+                        alt={current.name}
+                        width={56}
+                        height={56}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  ))}
+                    <div className="min-w-0">
+                      <p className="font-bold text-sm text-[#3D2314]">{current.name}</p>
+                      <p className="text-xs text-[#44403c]">{current.role}</p>
+                      <p className="text-xs text-[#708238]">{current.company}</p>
+                    </div>
+                  </div>
+
+                  {/* Stat */}
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-3xl md:text-5xl font-bold text-[#708238]">{current.stat.value}</p>
+                    <p className="text-[10px] md:text-xs text-[#44403c]">{current.stat.label}</p>
+                  </div>
                 </div>
 
-                {/* Author */}
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white font-bold text-xl">
-                    {testimonials[currentIndex].name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-bold text-neutral-900">{testimonials[currentIndex].name}</p>
-                    <p className="text-neutral-500">{testimonials[currentIndex].role}, {testimonials[currentIndex].company}</p>
-                  </div>
-                  <div className="ml-auto hidden md:flex">
+                {/* Quote */}
+                <div className="pt-4 border-t border-[#708238]/10">
+                  <p className="text-sm md:text-base text-[#3D2314] leading-relaxed">
+                    "{current.quote}"
+                  </p>
+                  <div className="flex gap-0.5 mt-3">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+                      <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                     ))}
                   </div>
                 </div>
               </div>
-
-              {/* Right - Visual */}
-              <div className="hidden md:block">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-500 rounded-3xl transform rotate-6" />
-                  <div className="relative bg-white rounded-3xl p-6 shadow-xl">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-amber-400" />
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-4 bg-neutral-100 rounded-full w-3/4" />
-                      <div className="h-4 bg-primary-100 rounded-full w-full" />
-                      <div className="h-4 bg-neutral-100 rounded-full w-5/6" />
-                      <div className="h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg w-1/2 mt-4" />
-                    </div>
-                    <div className="mt-6 p-4 bg-green-50 rounded-xl flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-green-800">Success!</p>
-                        <p className="text-xs text-green-600">Production optimized</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </AnimatePresence>
 
           {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-4 mt-6">
             <button
               onClick={prev}
-              className="w-12 h-12 rounded-full bg-white border-2 border-neutral-200 flex items-center justify-center hover:border-primary-500 hover:text-primary-500 transition-colors"
+              className="w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center hover:border-[#708238] hover:text-[#708238] transition-colors shadow-sm"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            {/* Dots */}
             <div className="flex gap-2">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? 'bg-primary-500 w-8'
-                      : 'bg-neutral-200 hover:bg-neutral-300'
+                      ? 'bg-[#708238] w-8'
+                      : 'bg-neutral-200 hover:bg-neutral-300 w-2'
                   }`}
                 />
               ))}
@@ -204,7 +176,7 @@ export default function Testimonials() {
 
             <button
               onClick={next}
-              className="w-12 h-12 rounded-full bg-white border-2 border-neutral-200 flex items-center justify-center hover:border-primary-500 hover:text-primary-500 transition-colors"
+              className="w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center hover:border-[#708238] hover:text-[#708238] transition-colors shadow-sm"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -216,12 +188,12 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20"
+          className="mt-10"
         >
-          <p className="text-center text-neutral-500 mb-8">Trusted by 500+ manufacturing companies</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50">
+          <p className="text-center text-[#44403c] text-sm mb-4">Trusted by 500+ manufacturing companies</p>
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 opacity-40">
             {['AutoParts', 'PharmaChem', 'ElectroniTech', 'FoodPro', 'PrecisionMach', 'TextileCo'].map((company) => (
-              <div key={company} className="text-2xl font-bold text-neutral-400">
+              <div key={company} className="text-lg font-bold text-[#3D2314]">
                 {company}
               </div>
             ))}

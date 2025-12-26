@@ -14,150 +14,130 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden mesh-background">
-      {/* Animated Orbs */}
-      <div className="orb w-96 h-96 bg-primary-400 top-20 -left-48" />
-      <div className="orb w-80 h-80 bg-accent-400 top-40 right-0" style={{ animationDelay: '5s' }} />
-      <div className="orb w-64 h-64 bg-secondary-400 bottom-20 left-1/3" style={{ animationDelay: '10s' }} />
+    <section className="relative overflow-hidden bg-white">
+      {/* Animated Orbs - Subtle */}
+      <div className="orb w-72 h-72 bg-orange-300/40 top-20 -left-36" />
+      <div className="orb w-64 h-64 bg-orange-200/50 top-32 right-0" style={{ animationDelay: '5s' }} />
+      <div className="orb w-48 h-48 bg-amber-200/40 bottom-40 left-1/4" style={{ animationDelay: '10s' }} />
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center pt-28 pb-8 lg:pt-32 lg:pb-12">
+
           {/* Left Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="text-center lg:text-left"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6"
-            >
-              <Zap className="w-4 h-4" />
-              <span>AI-Powered Manufacturing ERP</span>
-            </motion.div>
-
             {/* Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-4 text-[#3D2314]">
               Transform Your{' '}
-              <span className="gradient-text">Manufacturing</span>{' '}
-              Operations with AI
+              <span className="text-[#708238]">Manufacturing</span>{' '}
+              with AI
             </h1>
 
-            {/* Subheading */}
-            <p className="text-lg md:text-xl text-neutral-600 mb-8 max-w-xl mx-auto lg:mx-0">
-              FlowSense is a next-generation ERP solution that combines cutting-edge AI with comprehensive operational management. Reduce costs, eliminate inefficiencies, and make smarter decisions automatically.
+            {/* Description */}
+            <p className="text-sm md:text-base lg:text-lg text-[#44403c] mb-6 max-w-md leading-relaxed mx-auto lg:mx-0">
+              Streamline operations, reduce costs by 50%, and make smarter decisions
+              with FlowSense — the AI-powered ERP built for modern manufacturers.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+            <div className="flex flex-col sm:flex-row gap-3 mb-6 justify-center lg:justify-start">
               <Link
                 href="#get-started"
-                className="btn-gradient px-8 py-4 rounded-full font-semibold text-lg flex items-center justify-center gap-2 group"
+                className="px-5 py-2.5 md:px-6 md:py-3 rounded-full font-semibold text-xs md:text-sm flex items-center justify-center gap-2 group bg-[#708238] text-white hover:bg-[#5c6b2e] transition-all shadow-md shadow-[#708238]/20"
               >
-                <span>Start Free Trial</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Start Free Trial
+                <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link
                 href="#demo"
-                className="px-8 py-4 rounded-full font-semibold text-lg flex items-center justify-center gap-2 border-2 border-neutral-200 hover:border-primary-300 hover:bg-primary-50 transition-all text-neutral-700"
+                className="px-5 py-2.5 md:px-6 md:py-3 rounded-full font-semibold text-xs md:text-sm flex items-center justify-center gap-2 bg-white border border-[#708238]/30 hover:border-[#708238] hover:bg-[#708238]/10 transition-all text-[#3D2314]"
               >
-                <Play className="w-5 h-5" />
-                <span>Watch Demo</span>
+                <Play className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                Watch Demo
               </Link>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 gap-3 md:gap-4 pt-5 border-t border-neutral-200">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + index * 0.1 }}
                   className="text-center lg:text-left"
                 >
-                  <div className="flex items-center justify-center lg:justify-start gap-2 mb-1">
-                    <stat.icon className="w-5 h-5 text-primary-500" />
-                    <span className="text-2xl md:text-3xl font-bold text-neutral-900">{stat.value}</span>
+                  <div className="flex items-center justify-center lg:justify-start gap-1 mb-0.5">
+                    <stat.icon className="w-3.5 h-3.5 md:w-4 md:h-4 text-[#708238]" />
+                    <span className="text-base md:text-lg lg:text-xl font-bold text-[#3D2314]">{stat.value}</span>
                   </div>
-                  <span className="text-sm text-neutral-500">{stat.label}</span>
+                  <span className="text-[10px] md:text-xs text-[#78716c]">{stat.label}</span>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right Content - ERP Illustration */}
+          {/* Right Content - Image (hidden on mobile) */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="hidden lg:block relative"
           >
             <div className="relative">
+              {/* Glow Effect Behind Image */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#708238]/20 to-[#708238]/10 rounded-2xl blur-2xl scale-95" />
+
               {/* Main Image */}
-              <div className="rounded-3xl overflow-hidden shadow-2xl shadow-primary-500/20">
+              <div className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-lg lg:shadow-xl border border-neutral-200 bg-white">
                 <Image
                   src="/erp-isometric-banner.jpg"
                   alt="FlowSense ERP Platform"
-                  width={600}
-                  height={450}
+                  width={500}
+                  height={350}
                   className="w-full h-auto object-cover"
                   priority
                 />
               </div>
 
-              {/* Floating Cards */}
+              {/* Floating Card - Top Right */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 }}
-                className="absolute -left-8 top-1/4 bg-white rounded-2xl shadow-xl p-4 animate-float-delayed"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="absolute -top-2 -right-2 lg:-top-3 lg:-right-3 bg-white rounded-lg lg:rounded-xl shadow-md lg:shadow-lg px-2 py-1.5 lg:px-3 lg:py-2 border border-neutral-200 flex items-center gap-1.5 lg:gap-2"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-900">+25% Efficiency</p>
-                    <p className="text-xs text-neutral-500">AI Optimization</p>
-                  </div>
+                <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-md lg:rounded-lg bg-[#708238]/10 flex items-center justify-center">
+                  <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-[#708238]" />
+                </div>
+                <div className="hidden lg:block">
+                  <p className="text-xs font-semibold text-[#3D2314]">+25% Efficiency</p>
+                  <p className="text-[10px] text-[#78716c]">AI Powered</p>
                 </div>
               </motion.div>
 
+              {/* Floating Card - Bottom Left */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.4 }}
-                className="absolute -right-4 bottom-1/4 bg-white rounded-2xl shadow-xl p-4 animate-float"
-                style={{ animationDelay: '1s' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1 }}
+                className="absolute -bottom-2 -left-2 lg:-bottom-3 lg:-left-3 bg-white rounded-lg lg:rounded-xl shadow-md lg:shadow-lg px-2 py-1.5 lg:px-3 lg:py-2 border border-neutral-200 flex items-center gap-1.5 lg:gap-2"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-900">AI Prediction</p>
-                    <p className="text-xs text-neutral-500">Demand Forecast Ready</p>
-                  </div>
+                <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-md lg:rounded-lg bg-[#708238]/10 flex items-center justify-center">
+                  <Bot className="w-3 h-3 lg:w-4 lg:h-4 text-[#708238]" />
+                </div>
+                <div className="hidden lg:block">
+                  <p className="text-xs font-semibold text-[#3D2314]">Smart Forecasting</p>
+                  <p className="text-[10px] text-[#78716c]">Real-time AI</p>
                 </div>
               </motion.div>
             </div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Bottom Wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-            fill="white"
-          />
-        </svg>
       </div>
     </section>
   );

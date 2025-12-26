@@ -1,8 +1,6 @@
-import Header from '@/components/Header';
 import Industries from '@/components/sections/Industries';
 import Testimonials from '@/components/sections/Testimonials';
 import CTA from '@/components/sections/CTA';
-import Footer from '@/components/Footer';
 import Image from 'next/image';
 
 export const metadata = {
@@ -12,9 +10,7 @@ export const metadata = {
 
 export default function IndustriesPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
+    <main className="pt-20">
         {/* Hero Banner with Image */}
         <section className="py-16 bg-gradient-to-br from-emerald-50 via-white to-teal-50">
           <div className="container-custom">
@@ -45,8 +41,6 @@ export default function IndustriesPage() {
         <Industries />
         <Testimonials />
         <CTA />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }
