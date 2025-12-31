@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, User, Building2, Mail, Phone, Users, MessageSquare, Send } from 'lucide-react';
+import { X, User, Building2, Mail, Phone, Users, MessageSquare, Send, Briefcase } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -10,52 +10,85 @@ interface ContactModalProps {
 }
 
 const companySizes = [
-  '1-10 employees',
-  '11-50 employees',
-  '51-200 employees',
-  '201-500 employees',
-  '500+ employees',
+  { label: '1-10 employees', value: '1-10' },
+  { label: '11-50 employees', value: '11-50' },
+  { label: '51-200 employees', value: '51-200' },
+  { label: '201-500 employees', value: '201-500' },
+  { label: '501-1000 employees', value: '501-1000' },
+  { label: '1001-5000 employees', value: '1001-5000' },
+  { label: '5001+ employees', value: '5001+' },
 ];
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [formData, setFormData] = useState({
-    fullName: '',
-    companyName: '',
-    workEmail: '',
-    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
     companySize: '',
+    title: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset after showing success
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        fullName: '',
-        companyName: '',
-        workEmail: '',
-        phoneNumber: '',
-        companySize: '',
-        message: '',
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          companySize: formData.companySize,
+          title: formData.title,
+          message: formData.message,
+          pageUrl: typeof window !== 'undefined' ? window.location.href : ''
+        })
       });
-      onClose();
-    }, 2000);
+
+      if (!response.ok) {
+        throw new Error('Submission failed');
+      }
+
+      setIsSubmitted(true);
+
+      // Reset after showing success
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          company: '',
+          companySize: '',
+          title: '',
+          message: '',
+        });
+        onClose();
+      }, 2000);
+    } catch (err) {
+      setError('Sorry, there was an error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -108,55 +141,64 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Full Name */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
-                      Full Name *
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
-                      <input
-                        type="text"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleChange}
-                        required
-                        placeholder="John Doe"
-                        className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
-                      />
+                  {/* Error Message */}
+                  {error && (
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                      {error}
+                    </div>
+                  )}
+
+                  {/* Name Fields */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {/* First Name */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
+                        First Name *
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleChange}
+                          required
+                          placeholder="John"
+                          className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Last Name */}
+                    <div>
+                      <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
+                        Last Name
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                        <input
+                          type="text"
+                          name="lastName"
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          placeholder="Doe"
+                          className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Company Name */}
+                  {/* Email */}
                   <div>
                     <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
-                      Company Name *
-                    </label>
-                    <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
-                      <input
-                        type="text"
-                        name="companyName"
-                        value={formData.companyName}
-                        onChange={handleChange}
-                        required
-                        placeholder="Acme Inc."
-                        className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Work Email */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
-                      Work Email *
+                      Email *
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
                       <input
                         type="email"
-                        name="workEmail"
-                        value={formData.workEmail}
+                        name="email"
+                        value={formData.email}
                         onChange={handleChange}
                         required
                         placeholder="john@company.com"
@@ -168,17 +210,34 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   {/* Phone Number */}
                   <div>
                     <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
-                      Phone Number *
+                      Phone
                     </label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
                       <input
                         type="tel"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
+                        name="phone"
+                        value={formData.phone}
                         onChange={handleChange}
-                        required
                         placeholder="+1 (555) 000-0000"
+                        className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Company Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
+                      Company
+                    </label>
+                    <div className="relative">
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Acme Inc."
                         className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
                       />
                     </div>
@@ -187,7 +246,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   {/* Company Size */}
                   <div>
                     <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
-                      Company Size *
+                      Company Size
                     </label>
                     <div className="relative">
                       <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
@@ -195,23 +254,40 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         name="companySize"
                         value={formData.companySize}
                         onChange={handleChange}
-                        required
                         className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all appearance-none bg-white cursor-pointer"
                       >
                         <option value="">Select company size</option>
                         {companySizes.map((size) => (
-                          <option key={size} value={size}>
-                            {size}
+                          <option key={size.value} value={size.value}>
+                            {size.label}
                           </option>
                         ))}
                       </select>
                     </div>
                   </div>
 
+                  {/* Job Title */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
+                      Job Title
+                    </label>
+                    <div className="relative">
+                      <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                      <input
+                        type="text"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        placeholder="Product Manager"
+                        className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all"
+                      />
+                    </div>
+                  </div>
+
                   {/* Message */}
                   <div>
                     <label className="block text-sm font-medium text-[#3D2314] mb-1.5">
-                      Message *
+                      Message
                     </label>
                     <div className="relative">
                       <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-neutral-400" />
@@ -219,7 +295,6 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        required
                         rows={4}
                         placeholder="Tell us about your needs..."
                         className="w-full pl-11 pr-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:border-[#708238] focus:ring-2 focus:ring-[#708238]/20 transition-all resize-none"
