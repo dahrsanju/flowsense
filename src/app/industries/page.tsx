@@ -22,7 +22,7 @@ export default function IndustriesPage() {
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
                   Built for <span className="gradient-text">Your Industry</span>
                 </h1>
-                <p className="text-xl text-neutral-600">
+                <p className="text-xl text-neutral-600">a1
                   FlowSense is designed to address the unique challenges of different manufacturing sectors with industry-specific features and workflows.
                 </p>
               </div>
